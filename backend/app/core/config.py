@@ -1,20 +1,21 @@
+# app/core/config.py
 import os
 from datetime import timedelta
 
-# URL базы данных берём из переменной окружения (её даёт docker-compose через .env)
+# Пример: postgresql+psycopg://user:password@localhost:5432/maf_kaust_league
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "sqlite:///./test.db",  # запасной вариант для локального запуска без Postgres
+    "postgresql+psycopg://maf_user:maf_password@localhost:5432/maf_kaust_league",
 )
 
-# Секрет для JWT
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-dev-key")
-
-# Алгоритм JWT
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-key-change-me")
 JWT_ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 день
 
-# Время жизни access-токена
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))  # 24 часа
+MIN_PLAYERS_FOR_GAME = 10
+
+DEFAULT_GAME_HOUR = 19
+DEFAULT_GAME_MINUTE = 30
 
 
 def access_token_expires_delta() -> timedelta:
