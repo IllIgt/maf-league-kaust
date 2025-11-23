@@ -57,7 +57,7 @@ services:
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
   traefik:
-    image: traefik:v3.0
+    image: traefik:v3.1
     container_name: maf_traefik
     restart: always
     command:
