@@ -1,31 +1,21 @@
-# app/core/config.py
 import os
 from datetime import timedelta
-from pydantic import BaseSettings
-# Пример: postgresql+psycopg://user:password@localhost:5432/maf_kaust_league
+
+# URL базы данных берём из переменной окружения (её даёт docker-compose через .env)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg://maf_user:maf_password@localhost:5432/maf_kaust_league",
+    "sqlite:///./test.db",  # запасной вариант для локального запуска без Postgres
 )
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-key-change-me")
+# Секрет для JWT
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-dev-key")
+
+# Алгоритм JWT
 JWT_ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 день
 
-MIN_PLAYERS_FOR_GAME = 10
+# Время жизни access-токена
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))  # 24 часа
 
-DEFAULT_GAME_HOUR = 19
-DEFAULT_GAME_MINUTE = 30
-
-class Settings(BaseSettings):
-    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "super-secret-key")
-    DATABASE_URL: str = os.getenv("DATABASE_URL")
-
-    class Config:
-        env_file = ".env"
-
-
-settings = Settings()
 
 def access_token_expires_delta() -> timedelta:
     return timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

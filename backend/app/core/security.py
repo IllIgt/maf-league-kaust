@@ -1,31 +1,27 @@
-import jwt
 from datetime import datetime, timedelta
 from typing import Optional
 
+import jwt
 from fastapi import HTTPException, status
 from jwt import PyJWTError
 
-from app.core.config import settings  # если у тебя файл config называется иначе — скажи, поправлю
-
-
-ALGORITHM = "HS256"
+from app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM, access_token_expires_delta
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Создание JWT токена"""
     to_encode = data.copy()
 
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(hours=24)
+    if expires_delta is None:
+        expires_delta = access_token_expires_delta()
 
+    expire = datetime.utcnow() + expires_delta
     to_encode.update({"exp": expire})
 
     encoded_jwt = jwt.encode(
         to_encode,
-        settings.JWT_SECRET_KEY,
-        algorithm=ALGORITHM
+        JWT_SECRET_KEY,
+        algorithm=JWT_ALGORITHM,
     )
     return encoded_jwt
 
@@ -35,11 +31,10 @@ def decode_access_token(token: str) -> dict:
     try:
         payload = jwt.decode(
             token,
-            settings.JWT_SECRET_KEY,
-            algorithms=[ALGORITHM]
+            JWT_SECRET_KEY,
+            algorithms=[JWT_ALGORITHM],
         )
         return payload
-
     except PyJWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
