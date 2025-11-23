@@ -3,7 +3,11 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db, get_current_user
-from app import hash_password, verify_password, create_access_token
+from app.core.security import (
+    hash_password,
+    verify_password,
+    create_access_token
+)
 from app.models import User
 from app.schemas import RegisterRequest, LoginRequest, UserBase
 

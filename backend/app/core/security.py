@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 from jwt import PyJWTError
 
 from app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM, access_token_expires_delta
-
+from passlib.context import CryptContext
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Создание JWT токена"""
@@ -40,3 +40,13 @@ def decode_access_token(token: str) -> dict:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
         )
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
