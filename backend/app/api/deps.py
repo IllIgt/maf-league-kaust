@@ -4,9 +4,9 @@ from fastapi import Depends, HTTPException, Request, status
 from jose import JWTError
 from sqlalchemy.orm import Session
 
-from backend.app.db.session import SessionLocal
-from backend.app.models import User
-from backend.app import decode_access_token
+from app.db.session import SessionLocal
+from app.models import User
+from app import decode_access_token
 
 
 def get_db() -> Generator[Session, None, None]:

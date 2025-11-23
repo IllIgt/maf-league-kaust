@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from backend.app.api.deps import get_db, get_current_user
-from backend.app.models import Availability, User
-from backend.app.schemas import WeekSlot, WeekSlotsPreferences
+from app.api.deps import get_db, get_current_user
+from app.models import Availability, User
+from app.schemas import WeekSlot, WeekSlotsPreferences
 
 router = APIRouter()
 

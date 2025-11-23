@@ -5,16 +5,16 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from backend.app.api.deps import get_db, get_current_gamemaster, get_current_user
-from backend.app.core.config import MIN_PLAYERS_FOR_GAME, DEFAULT_GAME_HOUR, DEFAULT_GAME_MINUTE
-from backend.app.models import Game, GamePlayer, Availability, GameStatus, User
-from backend.app.schemas import (
+from app.api.deps import get_db, get_current_gamemaster, get_current_user
+from app.core.config import MIN_PLAYERS_FOR_GAME, DEFAULT_GAME_HOUR, DEFAULT_GAME_MINUTE
+from app.models import Game, GamePlayer, Availability, GameStatus, User
+from app.schemas import (
     GameOut,
     GameCreateFromSlot,
     GamePlayerResult,
     GameResultsUpdate,
 )
-from backend.app.services.stats import recalc_stats_for_user
+from app.services.stats import recalc_stats_for_user
 
 router = APIRouter()
 

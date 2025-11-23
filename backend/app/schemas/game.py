@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from backend.app.models.game import GameStatus
+from app.models.game import GameStatus
 
 
 class GamePlayerResult(BaseModel):

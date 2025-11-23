@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.app.db.session import engine
-from backend.app.db.session import Base
-from backend.app.api.routes import games
-from backend.app.api.routes import auth, week_slots, leaderboard
+from app.db.session import engine
+from app.db.session import Base
+from app.api.routes import games
+from app.api.routes import auth, week_slots, leaderboard
 
 app = FastAPI(title="Maf Kaust League API")
 

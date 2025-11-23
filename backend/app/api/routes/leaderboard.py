@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from backend.app.api.deps import get_db
-from backend.app.models import User
-from backend.app.schemas import LeaderboardEntry
+from app.api.deps import get_db
+from app.models import User
+from app.schemas import LeaderboardEntry
 
 router = APIRouter()
 

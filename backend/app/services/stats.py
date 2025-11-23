@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from backend.app.models import Game, GamePlayer, GameStatus, User
+from app.models import Game, GamePlayer, GameStatus, User
 
 
 def recalc_stats_for_user(db: Session, user_id: int) -> None:
