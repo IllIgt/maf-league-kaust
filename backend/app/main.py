@@ -9,14 +9,18 @@ from app.api.routes import auth, week_slots, leaderboard
 app = FastAPI(title="Maf Kaust League API")
 
 # CORS — под React на localhost:5173
+origins = [
+    "https://maf-club.xyz",
+    "http://localhost:5173",  # на будущее для локальной разработки
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.on_event("startup")
 def on_startup():
