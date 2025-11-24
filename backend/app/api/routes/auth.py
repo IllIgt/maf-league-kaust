@@ -48,7 +48,7 @@ def login(
     if not user.is_active:
         raise HTTPException(status_code=400, detail="User inactive")
 
-    token = create_access_token(user.id)
+    token = create_access_token({"sub": str(user.id)})
     response.set_cookie(
         key="access_token",
         value=token,
