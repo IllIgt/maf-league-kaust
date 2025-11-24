@@ -67,12 +67,21 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
 
+      # редирект HTTP -> HTTPS оставляем, Traefik сам
+      # корректно обработает HTTP-01 challenge
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
 
-      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      # ВАЖНО: убираем tlschallenge
+      # - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+
+      # включаем http-01 challenge
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+
       - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+
     ports:
       - "80:80"
       - "443:443"
