@@ -28,14 +28,20 @@ def get_current_user(
             detail="Not authenticated",
         )
     try:
-        user_id = decode_access_token(token)
+        payload = decode_access_token(token)
+        sub = payload.get("sub")
+        if sub is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token",
+            )
     except (JWTError, ValueError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",
         )
 
-    user = db.get(User, user_id)
+    user = db.get(User, int(sub))
     if not user or not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
