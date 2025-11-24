@@ -35,6 +35,7 @@ services:
       - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
 
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "traefik.docker.network=maf-league-kaust_web"
 
   frontend:
     build: ./frontend
