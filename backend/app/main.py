@@ -10,7 +10,7 @@ app = FastAPI(title="Maf Kaust League API")
 
 # CORS — под React на localhost:5173
 origins = [
-    "https://maf-club.xyz",
+    "https://maf-club.org",
     "http://localhost:5173",  # на будущее для локальной разработки
 ]
 
