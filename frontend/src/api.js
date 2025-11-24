@@ -9,7 +9,7 @@ export async function fetchLeaderboard() {
 }
 
 export async function fetchCurrentPlayer() {
-    const res = await fetch(`${API_BASE}/me`, {
+    const res = await fetch(`${API_BASE}/auth/me`, {
         credentials: "include",
     });
     if (!res.ok) throw new Error("Не удалось загрузить данные игрока");
