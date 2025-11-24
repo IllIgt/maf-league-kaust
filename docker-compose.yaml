@@ -29,7 +29,6 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # router для API
       - "traefik.http.routers.backend.rule=Host(`${BACKEND_DOMAIN}`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls=true"
@@ -48,7 +47,6 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # router для фронта
       - "traefik.http.routers.frontend.rule=Host(`${FRONTEND_DOMAIN}`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls=true"
@@ -67,20 +65,21 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
 
-      # редирект HTTP -> HTTPS оставляем, Traefik сам
-      # корректно обработает HTTP-01 challenge
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
 
-      # ВАЖНО: убираем tlschallenge
+      # tlschallenge
       # - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
 
-      # включаем http-01 challenge
+      # http-01 challenge
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
 
       - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+
+      - "--ping=true"
+      - "--ping.entryPoint=websecure"
 
     ports:
       - "80:80"
