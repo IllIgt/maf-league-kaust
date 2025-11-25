@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import GamesListPage from "./pages/GamesListPage";
 import GameDetailPage from "./pages/GameDetailPage";
+import GameHistoryPage from "./pages/GameHistoryPage.jsx";
+import GameDayDetailPage from "./pages/GameDayDetailPage.jsx";
 
 const App = () => {
     return (
