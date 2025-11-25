@@ -19,9 +19,11 @@ const App = () => {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/games/register" element={<GameRegistrationPage />} />
                 <Route path="/games" element={<GamesListPage />} />
-                <Route path="/games/:id" element={<GameDetailPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/history" element={<GameHistoryPage />} />
+                <Route path="/game-days/:id" element={<GameDayDetailPage />} />
+                <Route path="/games/:id" element={<GameDetailPage />} />
             </Routes>
         </Layout>
     );

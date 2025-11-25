@@ -45,6 +45,9 @@ class Game(Base):
     notes = Column(Text, nullable=True)
 
     players = relationship("GamePlayer", back_populates="game")
+    game_day_id = Column(Integer, ForeignKey("game_days.id"), nullable=False)
+
+    game_day = relationship("GameDay", back_populates="games")
 
 
 class GamePlayer(Base):
@@ -58,3 +61,14 @@ class GamePlayer(Base):
 
     game = relationship("Game", back_populates="players")
     player = relationship("User", back_populates="game_players")
+
+
+class GameDay(Base):
+    __tablename__ = "game_days"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, index=True, nullable=False)
+    title = Column(String, nullable=True)  # например "Friday Night #3"
+    notes = Column(Text, nullable=True)
+
+    games = relationship("Game", back_populates="game_day")
