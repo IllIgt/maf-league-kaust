@@ -3,9 +3,11 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.api.deps import get_db
-from .. import models, schemas
+
+from app import models, schemas
 
 router = APIRouter(prefix="/game-days", tags=["game-days"])
+
 
 @router.get("/", response_model=List[schemas.GameDayWithStats])
 def list_game_days(db: Session = Depends(get_db), limit: int = 50, offset: int = 0):
@@ -28,6 +30,7 @@ def list_game_days(db: Session = Depends(get_db), limit: int = 50, offset: int =
         result.append(item)
 
     return result
+
 
 @router.get("/{game_day_id}", response_model=schemas.GameDayDetail)
 def get_game_day(game_day_id: int, db: Session = Depends(get_db)):
