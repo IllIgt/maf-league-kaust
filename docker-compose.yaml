@@ -30,8 +30,9 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-
-      - "traefik.http.routers.backend.rule=Host(`${BACKEND_DOMAIN}`)"
+      - "traefik.http.routers.backend.rule=Host(`maf-club.org`) && PathPrefix(`/api`)"
+      - "traefik.http.middlewares.backend-strip-prefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.backend.middlewares=backend-strip-prefix"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls=true"
       - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
